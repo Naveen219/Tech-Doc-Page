@@ -1,0 +1,173 @@
+    <style > @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+    </style > * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+    body {
+        background-color: lightgray;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    #navbar {
+        position: fixed;
+        font-size: 1.65em;
+        top: 0px;
+        left: 0px;
+        width: 350px;
+        border: 2px #848482 solid;
+        height: 100%;
+    }
+
+    #navbar header {
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    #navbar li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-size: 1.20rem;
+        border-top: 1.5px solid;
+        list-style: none;
+        height: 20%;
+    }
+
+    #navbar ul {
+        height: 80%;
+        padding: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-bottom: 1.5px solid;
+    }
+
+    #navbar li a {
+        text-decoration: none;
+        cursor: pointer;
+        color: #1a1aff;
+    }
+
+    #navbar li:hover {
+        background-color: beige;
+        font-weight: bold;
+    }
+
+    #main-doc {
+        font-family: 'Open Sans', sans-serif;
+        margin-left: 360px;
+        font-size: 1.3rem;
+        line-height: 1.5;
+    }
+
+
+    #logo-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 5rem;
+        font-weight: 400;
+    }
+
+    #logo {
+        width: 120px;
+        height: 120px;
+        margin-right: 20px;
+    }
+
+
+
+    #uml-image {
+        width: 80%;
+        height: 400px;
+    }
+
+    pre {
+        background-color: #333333;
+        line-height: 1.25em;
+        overflow: auto;
+        padding: 1em;
+        white-space: pre;
+        width: 80%;
+    }
+
+    pre,
+    code {
+        font-family: "Ubuntu Mono", monospace;
+    }
+
+    token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #99cc33;
+    }
+
+    pre code {
+        color: #b9bdb6;
+        font-weight: normal;
+    }
+
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #cf9a49;
+    }
+
+
+    token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #8bd1ff;
+    }
+
+    #footer {
+        font-size: 1.10rem;
+        text-align: center;
+    }
+
+
+
+    @media only screen and (max-width: 815px) {
+        #navbar {
+            position: absolute;
+            top: 0;
+            border: none;
+            width: 100%;
+            z-index: 1;
+            max-height: 320px;
+
+        }
+
+        #main-doc {
+            margin-top: 400px;
+            margin-left: 0px;
+
+        }
+
+    }
+
+    @media only screen and (max-width: 400px) {
+        #main-doc {
+            margin-top: 420px;
+        }
+
+        #title {
+            font-size: 3.5rem;
+        }
+    }

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+
+    <title>Tech Doc Page</title>
+</head>
+
+<body>
+
+    <div id="nav-container">
+
+        <nav id="navbar">
+            <header>
+                <p>Thymeleaf Documentation
+                </p>
+            </header>
+            <ul>
+                <li><a class="nav-link" href="#Introducing_Thymeleaf">Introducing Thymeleaf</a></li>
+                <li><a class="nav-link" href="#The_Good_Thymes_Virtual_Grocery">The Good Thymes Virtual Grocery</a></li>
+                <li><a class="nav-link" href="#Using_Texts">Using Texts</a></li>
+                <li><a class="nav-link" href="#Standard_Expression_Syntax">Standard Expression Syntax</a></li>
+                <li><a class="nav-link" href="#Setting_Attribute_Values">Setting Attribute Values</a></li>
+            </ul>
+
+
+        </nav>
+    </div>
+    <div id="main-container">
+        <main id="main-doc">
+            <header id="logo-info">
+                <div>
+                    <img id="logo" src="https://www.thymeleaf.org/doc/images/thymeleaf.png" alt="thymeleaf">
+                </div>
+                <div>
+                    <span id="title">Thymeleaf</span>
+                </div>
+            </header>
+            <section class="main-section" id="Introducing_Thymeleaf">
+                <header>
+                    <h1>Introducing Thymeleaf</h1>
+                </header>
+                <article>
+                    <p>
+                        Thymeleaf is a modern server-side Java template engine for both web and standalone environments, capable of processing HTML, XML, JavaScript, CSS and even plain text.
+                    </p>
+                    <p>
+                        The main goal of Thymeleaf is to provide an elegant and highly-maintainable way of creating templates. To achieve this, it builds on the concept of Natural Templates to inject its logic into template files in a way that doesn’t affect the template from being used as a design prototype. This improves communication of design and bridges the gap between design and development teams.
+                    </p>
+                    <p>
+                        Thymeleaf has also been designed from the beginning with Web Standards in mind – especially HTML5 – allowing you to create fully validating templates if that is a need for you.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section" id="The_Good_Thymes_Virtual_Grocery">
+                <header>
+                    <h1>The Good Thymes Virtual Grocery</h1>
+                </header>
+                <article>
+                    <p>To better explain the concepts involved in processing templates with Thymeleaf, this tutorial will use a demo application which you can download from the project’s web site.
+                    </p>
+
+                    <p> This application is the web site of an imaginary virtual grocery, and will provide us with many scenarios to showcase Thymeleaf’s many features.
+                    </p>
+                    <p>
+                        To start, we need a simple set of model entities for our application: Products which are sold to Customers by creating Orders. We will also be managing Comments about those Products:</p>
+                    <img id="uml-image" src="https://www.thymeleaf.org/doc/tutorials/3.0/images/usingthymeleaf/gtvg-model.png" alt="uml-diagram">
+                    <p>Our application will also have a very simple service layer, composed by Service objects containing methods like:</p>
+
+                    <pre class=" language-java"><code class=" language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProductService</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>Product<span class="token operator">&gt;</span> <span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> ProductRepository<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> Product <span class="token function">findById</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> ProductRepository<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+<span class="token punctuation">}</span></code></pre>
+                </article>
+
+            </section>
+            <section class="main-section" id="Using_Texts">
+                <header>
+                    <h1>Using Texts</h1>
+                </header>
+                <article>
+                    <p>Our first task will be to create a home page for our grocery site.</p>
+                    <p>The first version of this page will be extremely simple: just a title and a welcome message. This is our /WEB-INF/templates/home.html file:</p>
+
+                    <pre class="language-html"><code class=" language-html"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>th</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.thymeleaf.org<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Good Thymes Virtual Grocery<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>UTF-8<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span> <span class="token attr-name">media</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>all<span class="token punctuation">"</span></span> 
+          <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../../css/gtvg.css<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>@{/css/gtvg.css}<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>text</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#{home.welcome}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Welcome to our grocery store!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre>
+                </article>
+            </section>
+            <section class="main-section" id="Standard_Expression_Syntax">
+
+                <header>
+                    <h1>Standard Expression Syntax</h1>
+                </header>
+                <article>
+                    <p>We will take a small break in the development of our grocery virtual store to learn about one of the most important parts of the Thymeleaf Standard Dialect: the Thymeleaf Standard Expression syntax.
+                    </p>
+                    <p>
+                        We have already seen two types of valid attribute values expressed in this syntax: message and variable expressions:
+                    </p>
+                    <pre class=" language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>utext</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#{home.welcome}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Welcome to our grocery store!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Today is: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name"><span class="token namespace">th:</span>text</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${today}<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>13 february 2011<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span></code></pre>
+                    <p>
+                        But there are more types of expressions, and more interesting details to learn about the ones we already know. First, let’s see a quick summary of the Standard Expression features:
+
+                    </p>
+
+
+                    <ul>
+                        <li>Simple expressions:
+                            <ul>
+                                <li>Variable Expressions: <code>${...}</code></li>
+                                <li>Selection Variable Expressions: <code>*{...}</code></li>
+                                <li>Message Expressions: <code>#{...}</code></li>
+                                <li>Link URL Expressions: <code>@{...}</code></li>
+                                <li>Fragment Expressions: <code>~{...}</code></li>
+                            </ul>
+                        </li>
+                        <li>Literals
+                            <ul>
+                                <li>Text literals: <code>'one text'</code>, <code>'Another one!'</code>,…</li>
+                                <li>Number literals: <code>0</code>, <code>34</code>, <code>3.0</code>, <code>12.3</code>,…</li>
+                                <li>Boolean literals: <code>true</code>, <code>false</code></li>
+                                <li>Null literal: <code>null</code></li>
+                                <li>Literal tokens: <code>one</code>, <code>sometext</code>, <code>main</code>,…</li>
+                            </ul>
+                        </li>
+                        <li>Text operations:
+                            <ul>
+                                <li>String concatenation: <code>+</code></li>
+                                <li>Literal substitutions: <code>|The name is ${name}|</code></li>
+                            </ul>
+                        </li>
+                        <li>Arithmetic operations:
+                            <ul>
+                                <li>Binary operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code></li>
+                                <li>Minus sign (unary operator): <code>-</code></li>
+                            </ul>
+                        </li>
+                        <li>Boolean operations:
+                            <ul>
+                                <li>Binary operators: <code>and</code>, <code>or</code></li>
+                                <li>Boolean negation (unary operator): <code>!</code>, <code>not</code></li>
+                            </ul>
+                        </li>
+                        <li>Comparisons and equality:
+                            <ul>
+                                <li>Comparators: <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> (<code>gt</code>, <code>lt</code>, <code>ge</code>, <code>le</code>)</li>
+                                <li>Equality operators: <code>==</code>, <code>!=</code> (<code>eq</code>, <code>ne</code>)</li>
+                            </ul>
+                        </li>
+                        <li>Conditional operators:
+                            <ul>
+                                <li>If-then: <code>(if) ? (then)</code></li>
+                                <li>If-then-else: <code>(if) ? (then) : (else)</code></li>
+                                <li>Default: <code>(value) ?: (defaultvalue)</code></li>
+                            </ul>
+                        </li>
+                        <li>Special tokens:
+                            <ul>
+                                <li>No-Operation: <code>_</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+            <section class="main-section" id="Setting_Attribute_Values">
+                <header>
+                    <h1>
+                        Setting Attribute Values
+                    </h1>
+                </header>
+                <article>
+                    <p>This chapter will explain the way in which we can set (or modify) values of attributes in our markup.</p>
+                    <p>Say our website publishes a newsletter, and we want our users to be able to subscribe to it, so we create a /WEB-INF/templates/subscribe.html template with a form:
+                    </p>
+                    <pre class=" language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>subscribe.html<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>fieldset</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Subscribe!<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fieldset</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">&gt;</span></span></code></pre>
+                </article>
+            </section>
+            <footer id="footer">&copy; Copyright 2021, All Rights Reserved</footer>
+
+        </main>
+    </div>
+
+
+</body></html>
