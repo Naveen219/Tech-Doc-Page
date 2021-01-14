@@ -1,4 +1,4 @@
-freeCodeCamp Tehcnical Documentation Project.
+freeCodeCamp Technical Documentation Project.
 
 The Page is fully responsive.
 
